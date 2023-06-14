@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style4.css">
+  <title>Flights</title>
+</head>
+<style>
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg)
+    }
+
+    to {
+      -webkit-transform: rotate(360deg)
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg)
+    }
+
+    to {
+      transform: rotate(360deg)
+    }
+  }
+
+  .loader--wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh
+  }
+
+  .loader--wrapper span {
+    font-size: calc(var(--font-scale, 1)*24px);
+    font-weight: 700;
+    text-transform: uppercase
+  }
+
+  body,
+  html {
+    background: #e5eef4;
+    color: rgb(0 0 0/.85);
+    padding: 0;
+    margin: 0;
+    font-size: calc(var(--font-scale, 1)*14px);
+    font-family: Lato, sans-serif;
+    font-weight: 400
+  }
+
+  body:lang(hi) {
+    font-family: Mukta, sans-serif
+  }
+
+  *,
+  ::after,
+  ::before,
+  html {
+    box-sizing: border-box
+  }
+
+  *,
+  ::after,
+  ::before {
+    -webkit-tap-highlight-color: rgb(0 0 0/0);
+    padding: 0;
+    margin: 0;
+    -webkit-font-smoothing: antialiased
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul {
+    margin: 0;
+    list-style: none;
+    padding: 0
+  }
+
+  a {
+    color: #0084ff;
+    text-decoration: none;
+    cursor: pointer
+  }
+
+  a:focus,
+  a:hover {
+    text-decoration: none;
+    outline: 0
+  }
+
+  a.button:focus,
+  a.button:hover {
+    color: #fff
+  }
+
+  button:focus,
+  button:hover {
+    outline: 0
+  }
+
+  .hide {
+    display: none
+  }
+
+  .show {
+    display: block
+  }
+
+  img {
+    max-width: 100%
+  }
+
+  .lineThrough {
+    text-decoration: line-through
+  }
+
+  .capText {
+    text-transform: uppercase
+  }
+
+  .capitalizeText {
+    text-transform: capitalize
+  }
+
+  .alignBottom {
+    vertical-align: bottom
+  }
+
+  .underline {
+    text-decoration: underline
+  }
+
+  .truncate {
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
+  }
+
+  .vrtTop {
+    vertical-align: top
+  }
+
+  .flightsContainer {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative
+  }
+
+  .icon8 {
+    width: 8px;
+    height: 8px
+  }
+
+  .icon12 {
+    width: 12px;
+    height: 12px
+  }
+
+  .icon14 {
+    width: 14px;
+    height: 14px
+  }
+
+  .icon16 {
+    width: 16px;
+    height: 16px
+  }
+
+  .icon18 {
+    width: 18px;
+    height: 18px
+  }
+
+  .icon20 {
+    width: 20px;
+    height: 20px
+  }
+
+  .icon21 {
+    width: 21px;
+    height: 21px
+  }
+
+  .icon22 {
+    width: 22px;
+    height: 22px
+  }
+
+  .icon24 {
+    width: 24px;
+    height: 24px
+  }
+
+  .icon28 {
+    width: 28px;
+    height: 28px
+  }
+
+  .icon30 {
+    width: 30px;
+    height: 30px
+  }
+
+  .icon32 {
+    width: 32px;
+    height: 32px
+  }
+
+  .icon34 {
+    width: 34px;
+    height: 34px
+  }
+
+  .icon36 {
+    width: 36px;
+    height: 36px
+  }
+
+  .icon40 {
+    width: 40px;
+    height: 40px
+  }
+
+  .icon94 {
+    width: 94px;
+    height: 94px
+  }
+
+  .icon80 {
+    width: 80px;
+    height: 80px
+  }
+
+  .icon120 {
+    width: 120px;
+    height: 120px
+  }
+
+  .bgProperties {
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    background-size: contain
+  }
+
+  .blackText {
+    color: #000
+  }
+
+  .whiteText {
+    color: #fff
+  }
+
+  .darkText {
+    color: #4a4a4a
+  }
+
+  .giBlackText {
+    color: #141823
+  }
+
+  .greyText {
+    color: #4f525a
+  }
+
+  .darkText2 {
+    color: #979797
+  }
+
+  .lightGreyText {
+    color: #6d7278 !important
+  }
+
+  .lighterGreyText {
+    color: #9b9b9b
+  }
+
+  .linkText {
+    all: unset;
+    color: #0091ff;
+    cursor: pointer
+  }
+
+  .greenText {
+    color: #249995
+  }
+
+  .orangeText {
+    color: #ff4d2a
+  }
+
+  .skyBlueText {
+    color: #32c5ff
+  }
+
+  .redText {
+    color: #e02020
+  }
+
+  .lightGreenText {
+    color: #69ffdd
+  }
+
+  .dimWhiteText {
+    color: rgb(255 255 255/.85)
+  }
+
+  .lightGreyText2 {
+    color: #878787
+  }
+
+  .fontSize9 {
+    font-size: 9px
+  }
+
+  .fontSize10 {
+    font-size: 10px
+  }
+
+  .fontSize11 {
+    font-size: calc(var(--font-scale, 1)*11px)
+  }
+
+  .fontSize12 {
+    font-size: calc(var(--font-scale, 1)*12px)
+  }
+
+  .fontSize13 {
+    font-size: calc(var(--font-scale, 1)*13px)
+  }
+
+  .fontSize14 {
+    font-size: calc(var(--font-scale, 1)*14px)
+  }
+
+  .fontSize15 {
+    font-size: calc(var(--font-scale, 1)*15px)
+  }
+
+  .fontSize16 {
+    font-size: calc(var(--font-scale, 1)*16px)
+  }
+
+  .fontSize18 {
+    font-size: calc(var(--font-scale, 1)*18px)
+  }
+
+  .fontSize20 {
+    font-size: calc(var(--font-scale, 1)*20px)
+  }
+
+  .fontSize22 {
+    font-size: calc(var(--font-scale, 1)*22px)
+  }
+
+  .fontSize24 {
+    font-size: calc(var(--font-scale, 1)*24px)
+  }
+
+  .fontSize26 {
+    font-size: calc(var(--font-scale, 1)*26px)
+  }
+
+  .fontSize28 {
+    font-size: calc(var(--font-scale, 1)*28px)
+  }
+
+  .fontSize32 {
+    font-size: calc(var(--font-scale, 1)*32px)
+  }
+
+  .fontSize36 {
+    font-size: calc(var(--font-scale, 1)*36px)
+  }
+
+  .fontSize42 {
+    font-size: calc(var(--font-scale, 1)*42px)
+  }
+
+  .lightFont {
+    font-weight: 400
+  }
+
+  .mediumBoldFont {
+    font-weight: 600
+  }
+
+  .boldFont {
+    font-weight: 700
+  }
+
+  .blackFont {
+    font-weight: 900
+  }
+
+  .QuicksandBold {
+    font-family: Quicksand, sans-serif;
+    font-weight: 700
+  }
+
+  .orangeGrad {
+    background-image: linear-gradient(247deg, #ff3e5e, #ff6d3f)
+  }
+
+  .whiteBg {
+    background: #fff
+  }
+
+  .textLeft {
+    text-align: left
+  }
+
+  .textRight {
+    text-align: right
+  }
+
+  .textCenter {
+    text-align: center
+  }
+
+  .relative {
+    position: relative
+  }
+
+  .absolute {
+    position: absolute
+  }
+
+  .radius2 {
+    border-radius: 2px
+  }
+
+  .noBrdr {
+    border: 0
+  }
+
+  .wdth100 {
+    width: 100%
+  }
+
+  .makeFlex {
+    display: flex
+  }
+
+  .makeFlex .flexOne {
+    flex: 1
+  }
+
+  .makeFlex .flexTwo {
+    flex: 2
+  }
+
+  .makeFlex.flexWrap {
+    flex-wrap: wrap
+  }
+
+  .makeFlex.column {
+    flex-direction: column
+  }
+
+  .makeFlex.row {
+    flex-direction: row
+  }
+
+  .makeFlex.justifyCenter,
+  .makeFlex.perfectCenter {
+    align-items: center;
+    justify-content: center
+  }
+
+  .makeFlex.spaceBtwCenter {
+    align-items: center;
+    justify-content: space-between
+  }
+
+  .makeFlex.hrtlCenter {
+    align-items: center
+  }
+
+  .makeFlex.vrtlCenter {
+    justify-content: center
+  }
+
+  .makeFlex.spaceBetween {
+    justify-content: space-between
+  }
+
+  .makeFlex.spaceAround {
+    justify-content: space-around
+  }
+
+  .makeFlex.end {
+    align-items: baseline
+  }
+
+  .makeFlex.top {
+    align-items: flex-start
+  }
+
+  .makeFlex.right {
+    justify-content: flex-end
+  }
+
+  .makeFlex.bottom {
+    align-items: flex-end
+  }
+
+  .makeFlex.left {
+    justify-content: flex-start
+  }
+
+  .inlineFlex {
+    display: inline-flex
+  }
+
+  .pushRight {
+    margin-left: auto
+  }
+
+  .pushLeft {
+    margin-right: auto
+  }
+
+  .noShrink {
+    flex-shrink: 0
+  }
+
+  .inlineB {
+    display: inline-block
+  }
+
+  .appendTop0 {
+    margin-top: 0 !important
+  }
+
+  .appendTop2 {
+    margin-top: 2px
+  }
+
+  .appendTop4 {
+    margin-top: 4px
+  }
+
+  .appendTop5 {
+    margin-top: 5px
+  }
+
+  .appendTop8 {
+    margin-top: 8px
+  }
+
+  .appendTop10 {
+    margin-top: 10px
+  }
+
+  .appendTop12 {
+    margin-top: 12px
+  }
+
+  .appendTop15 {
+    margin-top: 15px
+  }
+
+  .appendTop18 {
+    margin-top: 18px
+  }
+
+  .appendTop20 {
+    margin-top: 20px
+  }
+
+  .appendTop25 {
+    margin-top: 25px
+  }
+
+  .appendTop30 {
+    margin-top: 30px
+  }
+
+  .appendTop40 {
+    margin-top: 40px
+  }
+
+  .appendTop65 {
+    margin-top: 65px
+  }
+
+  .negAppendTop4 {
+    margin-top: -4px
+  }
+
+  .appendRight3 {
+    margin-right: 3px
+  }
+
+  .appendRight5 {
+    margin-right: 5px
+  }
+
+  .appendRight8 {
+    margin-right: 8px
+  }
+
+  .appendRight10 {
+    margin-right: 10px
+  }
+
+  .appendRight12 {
+    margin-right: 12px
+  }
+
+  .appendRight15 {
+    margin-right: 15px
+  }
+
+  .appendRight17 {
+    margin-right: 17px
+  }
+
+  .appendRight18 {
+    margin-right: 18px
+  }
+
+  .appendRight2 {
+    margin-right: 2px
+  }
+
+  .appendRight20 {
+    margin-right: 20px
+  }
+
+  .appendRight26 {
+    margin-right: 26px
+  }
+
+  .appendRight40 {
+    margin-right: 40px
+  }
+
+  .appendRight50 {
+    margin-right: 50px
+  }
+
+  .appendBottom0 {
+    margin-bottom: 0 !important
+  }
+
+  .appendBottom2 {
+    margin-bottom: 2px
+  }
+
+  .appendBottom3 {
+    margin-bottom: 3px
+  }
+
+  .appendBottom5 {
+    margin-bottom: 5px
+  }
+
+  .appendBottom6 {
+    margin-bottom: 6px
+  }
+
+  .appendBottom7 {
+    margin-bottom: 7px
+  }
+
+  .appendBottom8 {
+    margin-bottom: 8px
+  }
+
+  .appendBottom10 {
+    margin-bottom: 10px
+  }
+
+  .appendBottom12 {
+    margin-bottom: 12px
+  }
+
+  .appendBottom14 {
+    margin-bottom: 14px
+  }
+
+  .appendBottom15 {
+    margin-bottom: 15px
+  }
+
+  .appendBottom20 {
+    margin-bottom: 20px
+  }
+
+  .appendBottom24 {
+    margin-bottom: 24px
+  }
+
+  .appendBottom25 {
+    margin-bottom: 25px
+  }
+
+  .appendBottom30 {
+    margin-bottom: 30px
+  }
+
+  .appendBottom35 {
+    margin-bottom: 35px
+  }
+
+  .appendBottom40 {
+    margin-bottom: 40px
+  }
+
+  .appendBottom43 {
+    margin-bottom: 43px
+  }
+
+  .appendBottom60 {
+    margin-bottom: 60px
+  }
+
+  .appendBottom65 {
+    margin-bottom: 65px
+  }
+
+  .appendLeft3 {
+    margin-left: 3px
+  }
+
+  .appendLeft5 {
+    margin-left: 5px
+  }
+
+  .appendLeft7 {
+    margin-left: 7px
+  }
+
+  .appendLeft10 {
+    margin-left: 10px
+  }
+
+  .appendLeft12 {
+    margin-left: 12px
+  }
+
+  .appendLeft13 {
+    margin-left: 13px
+  }
+
+  .appendLeft15 {
+    margin-left: 15px
+  }
+
+  .appendLeft18 {
+    margin-left: 18px
+  }
+
+  .appendLeft20 {
+    margin-left: 20px
+  }
+
+  .appendLeft25 {
+    margin-left: 25px
+  }
+
+  .appendLeft26 {
+    margin-left: 26px
+  }
+
+  .appendLeft30 {
+    margin-left: 30px
+  }
+
+  .appendLeft35 {
+    margin-left: 35px
+  }
+
+  .appendLeft50 {
+    margin-left: 50px
+  }
+
+  .fontItalic {
+    font-style: italic
+  }
+
+  .append10 {
+    margin: 10px
+  }
+
+  .appendLR20 {
+    margin-left: 20px;
+    margin-right: 20px
+  }
+
+  .padding5 {
+    padding: 5px
+  }
+
+  .padding10 {
+    padding: 10px
+  }
+
+  .padding15 {
+    padding: 15px
+  }
+
+  .padding20 {
+    padding: 20px
+  }
+
+  .paddingTop20 {
+    padding-top: 20px
+  }
+
+  .paddingTop3 {
+    padding-top: 3px
+  }
+
+  .paddinLeft10 {
+    padding-left: 10px
+  }
+
+  .paddinLeft30 {
+    padding-left: 30px !important
+  }
+
+  .paddinRight10 {
+    padding-right: 10px
+  }
+
+  .paddinBottom4 {
+    padding-bottom: 4px
+  }
+
+  .paddinBottom20 {
+    padding-bottom: 20px
+  }
+
+  .paddinBottom70 {
+    padding-bottom: 70px
+  }
+
+  .paddingBottom10 {
+    padding-bottom: 10px
+  }
+
+  .paddingTop10 {
+    padding-top: 10px
+  }
+
+  .appendBottom4 {
+    margin-bottom: 4px
+  }
+
+  .paddingLR20 {
+    padding-left: 20px;
+    padding-right: 20px
+  }
+
+  .downArrow,
+  .upArrow {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    position: relative;
+    top: 5px;
+    left: 10px
+  }
+
+  .downArrow {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    top: 2px
+  }
+
+  .noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+  }
+
+  .loader {
+    border: 2px solid #f17531;
+    border-radius: 50%;
+    border-top: 2px solid transparent;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite
+  }
+
+  .pointer {
+    cursor: pointer
+  }
+
+  .customArrow {
+    border: solid #0091ff;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 4px;
+    position: relative
+  }
+
+  .arrowDown {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    top: -2px
+  }
+
+  .arrowUp {
+    transform: rotate(225deg);
+    -webkit-transform: rotate(225deg);
+    top: 3px
+  }
+
+  .tooltip-inner {
+    padding: 10px;
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0 0 3px #888;
+    opacity: 1
+  }
+
+  .tooltip.show {
+    opacity: 1
+  }
+
+  .arrow {
+    position: relative
+  }
+
+  .tooltip .arrow::after {
+    position: absolute;
+    content: "";
+    border-color: transparent;
+    border-style: solid
+  }
+
+  .bs-tooltip-bottom .arrow,
+  .bs-tooltip-left .arrow,
+  .bs-tooltip-right .arrow,
+  .bs-tooltip-top .arrow {
+    box-shadow: none;
+    background: 0 0
+  }
+
+  .bs-tooltip-right {
+    margin-left: 5px
+  }
+
+  .bs-tooltip-right .arrow::before {
+    right: 0;
+    border-width: .4rem .4rem .4rem 0;
+    border-right-color: #fff;
+    z-index: 1;
+    top: 0;
+    background: 0 0;
+    transform: rotate(0);
+    box-shadow: none
+  }
+
+  .bs-tooltip-right .arrow::after {
+    right: 0;
+    border-width: .55rem .55rem .55rem 0;
+    border-right-color: #ccc;
+    top: -2px;
+    background: 0 0;
+    transform: rotate(0)
+  }
+
+  .bs-tooltip-top .arrow::before {
+    top: 0;
+    border-width: .4rem .4rem 0;
+    border-top-color: #fff;
+    z-index: 1;
+    left: 0;
+    background: 0 0;
+    transform: rotate(0);
+    box-shadow: none
+  }
+
+  .bs-tooltip-top .arrow::after {
+    top: 0;
+    border-width: .55rem .55rem 0;
+    border-top-color: #ccc;
+    left: -2px;
+    background: 0 0;
+    transform: rotate(0);
+    box-shadow: none
+  }
+
+  .bs-tooltip-bottom .arrow::before {
+    bottom: 0;
+    border-width: 0 .4rem .4rem;
+    border-bottom-color: #fff;
+    z-index: 1;
+    left: 0
+  }
+
+  .bs-tooltip-bottom .arrow::after {
+    bottom: 0;
+    border-width: 0 .55rem .55rem;
+    border-bottom-color: #ccc;
+    left: -2px;
+    box-shadow: none;
+    transform: rotate(0);
+    background: 0 0
+  }
+
+  .bs-tooltip-left .arrow::before {
+    left: 0;
+    border-width: .4rem 0 .4rem .4rem;
+    border-left-color: #fff;
+    z-index: 1;
+    top: 0;
+    background: 0 0;
+    transform: rotate(0);
+    box-shadow: none
+  }
+
+  .bs-tooltip-left .arrow::after {
+    left: 0;
+    border-width: .55rem 0 .55rem .55rem;
+    border-left-color: #ccc;
+    top: -2px;
+    background: 0 0;
+    transform: rotate(0);
+    box-shadow: none
+  }
+
+  .fakeDivHeight10 {
+    width: 100%;
+    height: 10px;
+    display: flex;
+    background-color: #041422
+  }
+
+  .zIndex18 {
+    z-index: 18
+  }
+
+  .zIndex20 {
+    z-index: 20
+  }
+
+  .zIndex2 {
+    z-index: 2
+  }
+
+  .textDisabled {
+    opacity: .5;
+    cursor: not-allowed;
+    pointer-events: none
+  }
+
+  .arrowRight {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    top: -2px
+  }
+
+  .bigShadow {
+    box-shadow: 0 3px 30px 0 rgb(0 0 0/.1)
+  }
+
+  .arrowIcon {
+    border: solid #0091ff;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    cursor: pointer
+  }
+
+  .arrowIcon.active {
+    transform: rotate(225deg)
+  }
+
+  .customScroll::-webkit-scrollbar {
+    width: 5px;
+    height: 5px
+  }
+
+  .customScroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgb(0 0 0/.3);
+    border-radius: 4px
+  }
+
+  .customScroll::-webkit-scrollbar-thumb {
+    background-color: #949494;
+    border-radius: 4px;
+    border: 0
+  }
+
+  .link--disable {
+    opacity: .5;
+    cursor: not-allowed
+  }
+
+  .brounzText {
+    color: #da956d
+  }
+
+  .goldText {
+    color: #eed5a2
+  }
+
+  .mmtGreyText {
+    color: #9b9b9b
+  }
+
+  :root {
+    --myBizTheme: #371f30;
+    --myBizText: #f16249
+  }
+
+  .myBiz .customArrow {
+    border: solid var(--myBizText) !important;
+    border-width: 0 2px 2px 0 !important
+  }
+
+  .myBiz .fakeDivHeight10 {
+    background-color: var(--myBizTheme)
+  }
+
+  .myBizBackground {
+    background: #dfdfdf !important
+  }
+
+  .yoloCustomPersuasionCls {
+    z-index: 99999999 !important
+  }
+
+  .gap-x-15>* {
+    margin-right: 15px
+  }
+
+  .gap-x-10>:last-child,
+  .gap-x-15>:last-child,
+  .gap-x-20>:last-child,
+  .gap-x-5>:last-child {
+    margin: 0 !important
+  }
+
+  .gap-x-20>* {
+    margin-right: 20px
+  }
+
+  .gap-x-10>* {
+    margin-right: 10px
+  }
+
+  .gap-x-5>* {
+    margin-right: 5px
+  }
+
+  .white-space-no-wrap {
+    white-space: nowrap
+  }
+
+  html[dir=rtl] body {
+    font-family: Almarai, sans-serif;
+    text-align: right
+  }
+
+  html[dir=rtl] .gap-x-15>* {
+    margin-right: unset;
+    margin-left: 15px
+  }
+
+  html[dir=rtl] .gap-x-20>* {
+    margin-right: unset;
+    margin-left: 20px
+  }
+
+  html[dir=rtl] .gap-x-10>* {
+    margin-right: unset;
+    margin-left: 10px
+  }
+
+  html[dir=rtl] .gap-x-5>* {
+    margin-right: unset;
+    margin-left: 5px
+  }
+
+  html[dir=rtl] .pushRight {
+    margin-left: unset;
+    margin-right: auto
+  }
+
+  html[dir=rtl] .pushLeft {
+    margin-right: unset;
+    margin-left: auto
+  }
+
+  html[dir=rtl] .appendRight3 {
+    margin-left: 3px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight5 {
+    margin-left: 5px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight8 {
+    margin-left: 8px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight10 {
+    margin-left: 10px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight12 {
+    margin-left: 12px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight15 {
+    margin-left: 15px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight17 {
+    margin-left: 17px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight20 {
+    margin-left: 20px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight26 {
+    margin-left: 26px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight40 {
+    margin-left: 40px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendRight50 {
+    margin-left: 50px;
+    margin-right: unset
+  }
+
+  html[dir=rtl] .appendLeft3 {
+    margin-right: 3px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft5 {
+    margin-right: 5px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft7 {
+    margin-right: 7px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft10 {
+    margin-right: 10px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft13 {
+    margin-right: 13px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft15 {
+    margin-right: 15px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft18 {
+    margin-right: 18px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft20 {
+    margin-right: 20px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft25 {
+    margin-right: 25px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft30 {
+    margin-right: 30px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft35 {
+    margin-right: 35px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft50 {
+    margin-right: 50px;
+    margin-left: unset
+  }
+
+  html[dir=rtl] .appendLeft42 {
+    margin-right: 42px;
+    margin-left: unset
+  }
+
+  .myPartner {
+    background: #f2f2f2 !important
+  }
+
+  .overflow_hidden {
+    overflow: hidden !important
+  }
+
+  .the-arrow {
+    width: 18px;
+    position: absolute
+  }
+
+  .the-arrow.-right {
+    top: 33px;
+    right: 6px
+  }
+
+  .the-arrow>.shaft {
+    background-color: #008cff;
+    display: block;
+    height: 1px;
+    width: 17px;
+    position: relative
+  }
+
+  .the-arrow>.shaft::after,
+  .the-arrow>.shaft::before {
+    background-color: #008cff;
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 0;
+    right: 0
+  }
+
+  .the-arrow.-right>.shaft::after,
+  .the-arrow.-right>.shaft::before {
+    width: 4px
+  }
+
+  .the-arrow.-right>.shaft::before {
+    transform: rotate(40deg);
+    transform-origin: top right
+  }
+
+  .the-arrow.-right>.shaft::after {
+    transform: rotate(-40deg);
+    transform-origin: bottom right
+  }
+</style>
+<style>
+  .ng-cloak,
+  [ng-cloak],
+  [ng:cloak] {
+    display: none !important
+  }
+</style>
+
+<body>
+  {{#each results}}
+  <div class="appendBottom15">
+    <div class="listingCard appendBottom5">
+      <div class="makeFlex hrtlCenter spaceBetween">
+        <div class="makeFlex">
+
+        </div>
+      </div>
+      <div class="makeFlex spaceBetween">
+        <div class="makeFlex">
+          <div class="makeFlex align-items-center gap-x-10 airline-info-wrapper" style="margin-top: -7px;">
+            <span class="">
+              <span class="arln-logo logo1"
+                style="background-image: url(&quot;https://imgak.mmtcdn.com/flights/assets/media/dt/common/icons/QR.png?v=15&quot;);">
+              </span>
+            </span>
+            <div>
+              <p class="boldFont blackText airlineName">{{this.FlightName}}</p>
+              <p class="fliCode">QR 529, QR 719</p>
+            </div>
+          </div>
+          <div class="timingOptionOuter">
+            <label class="not-radio " for="jrnyKey_0_5843e053-0088-4daa-b8f9-644370307a91" style="cursor: default;">
+              <div class="timingOption">
+                <div class="makeFlex">
+                  <div class="makeFlex fontSize12 flexOne gap-x-10">
+                    <div class="flexOne timeInfoLeft">
+                      <p class="appendBottom2 flightTimeInfo">
+                        <span>{{this.Time}}</span>
+                      </p>
+                      <p class="blackText">
+                        <font color="#000000">{{this.FromAirport}}</font>
+                      </p>
+                    </div>
+                    <div class="stop-info flexOne">
+                      <p>20<font color="#757575"> h </font>45<font color="#757575"> m </font>
+                      </p>
+                      <div>
+                        <div class="relative fliStopsSep">
+                          <p class="fliStopsSepLine" style="border-top: 3px solid rgb(245, 166, 34);"></p><span
+                            class="fliStopsDisc"></span>
+                        </div>
+                        <p class="flightsLayoverInfo">1 stop via Doha</p>
+                      </div>
+                    </div>
+                    <div class="flexOne timeInfoRight">
+                      <p class="appendBottom2 flightTimeInfo"><span>12:35</span></p>
+                      <p class="blackText">
+                        <font color="#000000">{{this.ToAirport}}</font>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="priceSection">
+          <div class="makeFlex top gap-x-10">
+            <div class="textRight flexOne" style="margin-top: -5px;">
+              <div class="blackText fontSize18 blackFont white-space-no-wrap">₹ 68,191<p
+                  class="fontSize12 darkText lightFont">per traveller</p>
+              </div>
+            </div><button id="bookbutton-RKEY:341590e0-f618-4504-ac6b-2387c4ffd3ce:29_0"
+              class="ViewFareBtn  text-uppercase "><span class="appendRight8">View Prices</span><span
+                class="customArrow arrowDown"></span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="collapse"></div>
+    <div class="collapse" style=""></div>
+    <div class="collapse"></div>
+    <div class="collapse"></div>
+  </div>
+  {{/each}}
+</body>
+
+</html>
