@@ -59,6 +59,12 @@
                     "data": JSON.stringify({ response }),
                 }
             },
+            $.ajax(settings).done(function (response) {
+
+                orderId = response.orderId;
+                console.log(orderId);
+                $("button").show();
+            });
             "theme": {
                 "color": "#99cc33"
             }
@@ -77,4 +83,5 @@
         e.preventDefault();
     }
 </script>
-</html >
+
+</html>
