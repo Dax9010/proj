@@ -1,7 +1,9 @@
 const express = require('express');
-const bookingController = require('../controllers/booking');
+const authController = require('../controllers/auth');
 const router = express.Router();
 
-router.post('/retrival' , bookingController.retrival);
+// router.post('/retrival' , authController.retrival);
+
+// router.get('/flightbook/:id' , authController.bookFlight)
 
 module.exports = router;

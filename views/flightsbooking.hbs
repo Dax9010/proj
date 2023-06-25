@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Booking Form HTML Template</title>
+	
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=PT+Sans:400" rel="stylesheet">
@@ -33,7 +33,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="booking-form">
-						<form action="booking/retrival" method="POST" id="my-form">							
+						<form action="/auth/retrival" method="POST" id="my-form">							
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
@@ -57,30 +57,11 @@
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
-										<span class="form-label">Adults (18+)</span>
+										<span class="form-label">Passengers</span>
 										<input class="form-control" name="Adult" type="number" placeholder="Adults" required>
 										<span class="select-arrow"></span>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<span class="form-label">Children (0-17)</span>
-										<input class="form-control" name="Child" type="number" placeholder="Children" required>
-										<span class="select-arrow"></span>
-									</div>
-								</div>
-                                <div class="col-md-3">
-									<div class="form-group">
-										<span class="form-label">Travel class</span>
-										<select class="form-control" name="class">
-											<option>Economy class</option>
-                                            <option>Premium Economy class</option>
-											<option>Business class</option>
-											<option>First class</option>
-										</select>
-										<span class="select-arrow"></span>
-									</div>
-								</div>
+								</div>                                
 							</div>
 							<div class="row">								
 								<div class="col-md-3">

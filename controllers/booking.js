@@ -1,27 +1,28 @@
-const mysql = require('mysql');
+// const { MongoClient, ServerApiVersion } = require("mongodb");
+// const { mongo } = require('mongoose');
+// const client = new MongoClient(process.env.URI)
 
-const db = mysql.createConnection({
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE,
-});
+// exports.retrival = async (req,res) => {
+//     console.log(req.body)
 
-exports.retrival = (req,res) => {
-    console.log(req.body)
+//     const {FromAirport , ToAirport , Date , Adult } = req.body;
 
-    const {FromAirport , ToAirport , Date , Adult , Child , classV } = req.body;
+//     const mydb = client.db('flight-booking').collection('Flightdetails')
 
-    db.query('Select * from flightdetails where FromAirport like ? and ToAirport like ? and Date = ?' , [FromAirport , ToAirport , Date] , async (err , results) => {
-        if(err){
-            console.log(err)
-        }
-        if(results.length > 0){
-            res.render('flightdetails' , { results })
-        } else {
-            res.render('flightsbooking' , {
-                message: 'No flights found'
-            });
-        }
-    })
-}
+//     const results = await mydb.find({fromAirport: FromAirport , toAirport: ToAirport , date: Date}).toArray();
+
+
+
+//     if(results.length > 0){
+//         return res.render('flightdetails' , {flights: results , count: Adult})
+//     }
+
+//     return res.end('No flights found')
+// }
+
+// exports.bookFlight = async (req,res) => {    
+//     const id = req.params.id;
+//     const mydb = client.db('flight-booking').collection('Flightdetails')
+//     const results = await mydb.findOne({_id: new mongo.ObjectId(id)})    
+//     return res.render('passengeradd' , {details: results})
+// }

@@ -13,8 +13,8 @@
         <h4>Trivago</h4>
         <ul>
             <li><a href="/auth/adminpanel"></a>Home</li>
-            <li><a href="/addflights"></a>Add Flights</li>
-            <li><a href="/viewflights"></a>View Flights</li>
+            <li><a href="/auth/addflights"></a>Add Flights</li>
+            <li><a href="/auth/viewflights"></a>View Flights</li>
             <li><a href="/auth/adminlogout"></a>Logout</li>
         </ul>
     </nav>
@@ -32,19 +32,16 @@
     </tr>
   </thead>
   <tbody>
-    {{#each results}}
+    {{#each flights}}
     <tr>
-      <td>{{this.FromAirport}}</td>
-      <td>{{this.ToAirport}}</td>
-      <td>{{this.FlightName}}</td>
-      <td>{{this.Date}}</td>
-      <td>{{this.Time}}</td>
-      <td>{{this.Distance}}</td>
+      <td>{{this.fromAirport}}</td>
+      <td>{{this.toAirport}}</td>
+      <td>{{this.flightName}}</td>
+      <td>{{this.date}}</td>
+      <td>{{this.time}}</td>
+      <td>{{this.dist}}</td>      
       <td class="text-end">
-        <a href="/editdetails/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-person-x"></i>Edit</a>
-      </td>
-      <td class="text-end">
-        <a href="/deleteflight/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-person-x"></i>Delete</a>
+        <a href="/auth/deleteflight/{{_id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-person-x"></i>Delete</a>
       </td>
     </tr>
     {{/each}}

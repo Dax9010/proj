@@ -1,5 +1,6 @@
 const express = require('express');
 const viewController = require('../controllers/view')
+const authController = require('../controllers/auth')
 const router = express.Router();
 
 router.get("/" , (req,res) => {
@@ -18,24 +19,8 @@ router.get("/register" , (req,res) => {
     res.render('register')
 });
 
-router.get("/booking"  ,(req , res) => {
-    res.render('flightsbooking');
-})
-
-router.get("/addflights" , (req ,res) => {
-    res.render('addflights')
-})
-
-router.get("/viewflights" , viewController.viewflights)
-
-router.get('/editdetails/:id' , viewController.editflights)
-
-router.post('/editdetails/:id' , viewController.updateflight)
-
-router.get('/deleteflight/:id' , viewController.deleteflight)
-
-router.get('/flightbooking' , (req,res) => {
-    res.render('flightsbooking')
+router.get('/oneflight' , (req,res) => {
+    res.render('oneflight')
 })
 
 module.exports = router;

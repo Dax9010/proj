@@ -1,70 +1,40 @@
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const { mongo } = require('mongoose');
+const client = new MongoClient(process.env.URI);
 
+// exports.viewflights = async (req, res) => {
 
+//     const mydb = client.db("flight-booking").collection("Flightdetails")
+    
+//     const results = await mydb.find({}).toArray()
 
+//     console.log(results)
 
-const db = mysql.createConnection({
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE,
-});
+//     if(results.length > 0){
+//         return res.render('viewflights' , {flights: results})
+//     }
 
-exports.viewflights = (req, res) => {
-    db.query('Select * from flightdetails', (err, results) => {
-        if (err) {
-            console.log(err)
-        }
-        if (results.length > 0) {
-            return res.render('viewflights', { results })
-        }
-    })
-}
+//     return res.end('No Flights Found')
+// }
 
-exports.editflights = (req, res) => {
-    db.query('Select * from flightdetails WHERE id = ?', [req.params.id], (err, results) => {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log(results)
-            res.render('editflights', { results })
-        }
-    })
-}
+// exports.deleteflight = async (req,res) => {
 
-exports.updateflight = (req, res) => {
-    const { from, to, flightName, date, time, dist } = req.body;
-    console.log(req.body)
-    db.query('UPDATE flightdetails SET FromAirport = ? , ToAirport = ? , FlightName = ? , Date = ? , Time = ? , Distance = ? WHERE id = ?'
-        , [from, to, flightName, date, time, dist, req.params.id], (err, results) => {
-            if (err) {
-                console.log(err)
-            } else {
-                db.query('Select * from flightdetails', (err, results) => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        res.render('viewflights', { results })
-                    }
-                })
-            }
-        })
-}
+//     const mydb = client.db("flight-booking").collection("Flightdetails")
 
-exports.deleteflight = (req,res) => {
-    db.query('DELETE FROM flightdetails WHERE id = ?' , [req.params.id] , (err , results) => {
-        if(err){
-            console.log(err)
-        } else {
-            db.query('Select * from flightdetails', (err ,results) => {
-                if(err){
-                    console.log(err)
-                } else {
-                    res.render('viewflights' , {results})
-                }
-            })
-        }
-    })
-}
+//     var delete_id = req.params.id;
+
+//     const Del = await mydb.findOneAndDelete({_id: new mongo.ObjectId(delete_id)})
+
+//     console.log(Del)
+
+//     const results = await mydb.find({}).toArray();
+
+//     if(results.length > 0){
+//         return res.render('viewflights' , {flights: results})
+//     }
+
+//     return res.end('No flights found')
+// }

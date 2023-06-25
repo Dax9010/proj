@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style1.css">
+  <title>Document</title>
+</head>
+
+<body>
+  {{#with flight}}
+  <div class="container-sm">      
+    <div class="col-6 col-md-3 col-lg-2 m-3" style="float: left;">
+      <div class="card">
+        <img src="{{url}}" style="height: 150px;" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{flightName}}</h5>          
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Flight Number: {{flightNumber}}</li>
+          <li class="list-group-item">From: {{fromAirport}}</li>
+          <li class="list-group-item">To: {{toAirport}}</li>
+          <li class="list-group-item">Date: {{date}}</li>
+          <li class="list-group-item">Time: {{time}}</li>
+          <li class="list-group-item">Availability: {{avail}}</li>
+        </ul>        
+      </div>
+    </div>        
+  </div>
+  {{/with}}
+</body>
+<script>
+  function validate(var seats , var tickets) {
+    if(seats <= 0 || seats < tickets){
+      return false;
+    }
+    return true;
+  }
+</script>
+
+</html>
