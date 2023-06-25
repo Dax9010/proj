@@ -307,6 +307,7 @@ exports.passengeradd = async (req, res) => {
     const result = await mydb.findOne({ _id: new mongo.ObjectId(book_id) })
     console.log(result)
     var cost = 12.25 * result.dist * count
+    session.amount = cost
     return res.render('passengeradd', { flights: result, persons: count, money: cost })
 }
 
@@ -324,7 +325,7 @@ exports.finalbook = async (req, res) => {
     const doc = { Flight: new mongo.ObjectId(flight_id), User: session.userID, Name: Name, Mobile: mobile, Email: email, flyingFrom: flight.fromAirport, flyingto: flight.toAirport, flightName: flight.flightName, date: flight.date, time: flight.time, seats: session.count }
     result = await mydb.insertOne(doc)
 
-    return res.end(session.count + ' seats  booked in ' + flight.flightName)
+    return res.render('payment')
 }
 
 exports.renderProduct = async (req, res) => {
@@ -336,7 +337,10 @@ exports.renderProduct = async (req, res) => {
 }
 
 exports.payment = async (req, res) => {
-    var amount = 50000
+    if (typeof session == 'undefined') {
+        return res.end("Login first")
+    }
+    var amount = session.amount * 100
     console.log(instance)
     var options = {
         amount: amount,  // amount in the smallest currency unit
@@ -345,11 +349,14 @@ exports.payment = async (req, res) => {
     };
     instance.orders.create(options, function(err, order) {
         console.log(order)
-        res.send({orderID: order.id})
+        res.send({orderID: order.id , Amount: amount})
     })
 }
 
 exports.verifyPayment = async(req,res) => {
+    if (typeof session == 'undefined') {
+        return res.end("Login first")
+    }
     let body = req.body.response.razorpay_order_id+"|"+req.body.response.razorpay_payment_id
 
     var crypto = require('crypto')

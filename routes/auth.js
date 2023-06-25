@@ -37,11 +37,7 @@ router.get('/viewbookings' , authController.viewbookings)
 
 router.get('/adminbookings' , authController.adminbookings)
 
-router.get('/final' , (req,res) => {
-    res.render('payment')
-})
-
-router.get('/payment' , authController.payment)
+router.post('/payment' , authController.payment)
 
 router.post('/payment/verify' , authController.verifyPayment)
 
