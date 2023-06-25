@@ -19,8 +19,4 @@ router.get("/register" , (req,res) => {
     res.render('register')
 });
 
-router.get('/oneflight' , (req,res) => {
-    res.render('oneflight')
-})
-
 module.exports = router;

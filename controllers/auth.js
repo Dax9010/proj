@@ -1,4 +1,3 @@
-const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { mongo, ObjectId, default: mongoose } = require('mongoose');
